@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>vehicle Hire Management</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.jpg" rel="icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Updated: Mar 09 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+	<div th:replace="~{header.html}"></div>
+  </header><!-- End Header -->
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+   <div th:replace="~{menu.html}"></div>
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>List Of vehicle Hires</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Pages</li>
+          <li class="breadcrumb-item active">vehicle Hires</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+	
+	<button type="button" class="btn btn-primary mb-4 add-button" data-bs-toggle="modal" data-bs-target="#managevehicleHire">
+                Add vehicle Hire
+    </button>
+              
+	<div class="card">
+            <div class="card-body">
+              <!-- Default Table -->
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#ID</th>
+                    <th scope="col">VEHICLE</th>
+                    <th scope="col">DATE OUT</th>
+                    <th scope="col">TIME OUT</th>
+                    <th scope="col">REMARKS</th>
+                    <th scope="col">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="vehicleHire : ${vehicleHires}">
+					<td th:text="${vehicleHire.id}"></td>
+					<td th:text="${vehicleHire.vehicle.name}"></td>
+					<td th:text="${vehicleHire.dateOut}"></td>
+					<td th:text="${vehicleHire.timeOut}"></td>
+                    <td th:text="${vehicleHire.remarks}"></td>
+                    <td>
+                      <div class="btn-group">
+						<a class="btn btn-outline-secondary show-button" 
+					    		data-bs-toggle="modal" data-bs-target="#managevehicleHire"
+				                th:attr="data-vehicleHire-id=${vehicleHire.id}, 
+				                		 data-vehicleHire-vehicleid=${vehicleHire.vehicleid},
+				                		 data-vehicleHire-dateOut=${vehicleHire.dateOut},
+				                		 data-vehicleHire-timeOut=${vehicleHire.timeOut},
+				                		 data-vehicleHire-dateIn=${vehicleHire.dateIn},
+				                		 data-vehicleHire-timeIn=${vehicleHire.timeIn},
+				                		 data-vehicleHire-clientid=${vehicleHire.clientid},
+				                		 data-vehicleHire-locationid=${vehicleHire.locationid},
+				                		 data-vehicleHire-price=${vehicleHire.price},
+				                		 data-vehicleHire-remarks=${vehicleHire.remarks}">
+					    	<i class="far fa-eye" title="Details"></i>
+					    </a>
+                         <a class="btn btn-outline-primary edit-button"
+				                data-bs-toggle="modal" data-bs-target="#managevehicleHire"
+				                th:attr="data-vehicleHire-id=${vehicleHire.id}, 
+				                		 data-vehicleHire-vehicleid=${vehicleHire.vehicleid},
+				                		 data-vehicleHire-dateOut=${vehicleHire.dateOut},
+				                		 data-vehicleHire-timeOut=${vehicleHire.timeOut},
+				                		 data-vehicleHire-dateIn=${vehicleHire.dateIn},
+				                		 data-vehicleHire-timeIn=${vehicleHire.timeIn},
+				                		 data-vehicleHire-clientid=${vehicleHire.clientid},
+				                		 data-vehicleHire-locationid=${vehicleHire.locationid},
+				                		 data-vehicleHire-price=${vehicleHire.price},
+				                		 data-vehicleHire-remarks=${vehicleHire.remarks}">
+          					<i class="fas fa-edit" title="Edit"></i>
+        				</a>
+					    <a class="btn btn-outline-danger delete-button" 
+					    		data-bs-toggle="modal" data-bs-target="#deletevehicleHire"
+					    		th:attr="data-vehicleHire-id=${vehicleHire.id}">
+					    	<i class="fas fa-trash-alt" title="Delete"></i>
+					    </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- End Default Table Example -->
+            </div>
+    </div>
+          
+          
+     <!-- Add Modal -->
+              <div class="modal fade bd-example-modal-lg" id="managevehicleHire" tabindex="-1" data-bs-backdrop="false">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="modal-title">Adding a new vehicle Hire</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <form th:action="@{/vehiclehire/addnew}" id="formvehicleHire" method="post">
+						  <input type="hidden" class="form-control" id="id" name="id" readonly>
+						  <div class="form-group col-5">
+				            <label for="name" class="col-form-label">Vehicle:</label>
+				            <select required class="form-control" id="vehicleid" name="vehicleid">
+								<option value="" disabled selected>-SELECT-</option>			    
+							    <option th:each="vehicle : ${vehicles}"
+								     th:value="${vehicle.id}"
+								     th:text="${vehicle.name}">
+								</option>
+							</select>
+				          </div>
+				          <div class="form-row d-flex justify-content-between">
+				             <div class="form-group col-5">
+					            <label for="dateOut" class="col-form-label">Date Out:</label>
+					            <input type="date" class="form-control" id="dateout" name="dateOut">
+					         </div>
+					         <div class="form-group col-5">
+					            <label for="timeout" class="col-form-label">Time Out:</label>
+					            <input type="text" class="form-control" id="timeout" name="timeOut">
+					         </div>
+				          </div>
+				          <div class="form-row d-flex justify-content-between">
+				             <div class="form-group col-5">
+					            <label for="datein" class="col-form-label">Date In:</label>
+					            <input type="date" class="form-control" id="datein" name="dateIn">
+					         </div>
+					         <div class="form-group col-5">
+					            <label for="timein" class="col-form-label">Time In:</label>
+					            <input type="text" class="form-control" id="timein" name="timeIn">
+					         </div>
+				          </div>
+				           <div class="form-row d-flex justify-content-between">
+				             <div class="form-group col-5">
+				            	<label for="clientid" class="col-form-label">Client:</label>
+					            <select required class="form-control" id="clientid" name="clientid">
+									<option value="" disabled selected>-SELECT-</option>			    
+								    <option th:each="client : ${clients}"
+									     th:value="${client.id}"
+									     th:text="${client.name}">
+									</option>
+								</select>
+							 </div>
+							 <div class="form-group col-5">
+					            <label for="locationid" class="col-form-label">Location:</label>
+					            <select required class="form-control" id="locationid" name="locationid">
+									<option value="" disabled selected>-SELECT-</option>			    
+								    <option th:each="location : ${locations}"
+									     th:value="${location.id}"
+									     th:text="${location.description}">
+									</option>
+								</select>
+							 </div>
+				          </div>
+				          <div class="form-row d-flex justify-content-between">
+				             <div class="form-group col-2">
+					            <label for="price" class="col-form-label">Price:</label>
+					            <input type="number" class="form-control" id="price" name="price">
+					          </div>
+					          <div class="form-group col-9">
+					            <label for="remarks" class="col-form-label">Remarks:</label>
+					            <input type="text" class="form-control" id="remarks" name="remarks">
+					          </div>
+				          </div>
+	                      <div class="modal-footer">
+							<button type="submit" class="btn btn-primary" id="submit" >Ajouter</button>
+	                        <button type="button" class="btn btn-danger" id="cancel" data-bs-dismiss="modal">Cancel</button>
+	                      </div>
+                    </form>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Add Modal-->
+              
+              <!-- Delete Modal -->
+              <div class="modal fade" id="deletevehicleHire" tabindex="-1" data-bs-backdrop="false">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Deleting a vehicle Hire</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+						<p>Are you sure you want to delete this record?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <a class="btn btn-danger" id="confirmDelete">Yes, Delete</a>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Delete Modal-->
+          
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>FleetApp</span></strong>. All Rights Reserved
+    </div>
+    <div class="credits">
+      <!-- All the links in the footer should remain intact. -->
+      <!-- You can delete the links only if you purchased the pro version. -->
+      <!-- Licensing information: https://bootstrapmade.com/license/ -->
+      <!-- Purchase the pro version with working PHP/AJAX vehicleHire form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+      Designed by <a href="#">IskCode</a>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="assets/js/jquery.js"></script> 
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/vehicleHire.js"></script> 
+  
+  
+</body>
+
